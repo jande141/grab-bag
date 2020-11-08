@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
+import styled from "styled-components";
 import { ItemTypes } from "./ItemTypes";
+import { DragImage } from "./DragImage";
 
 //import all the components we are going to use
 import { Image, TouchableOpacity, FlatList } from "react-native";
+
+const Container = styled.div`
+  height: 50px;
+  width: 80vw;
+  background-color: ${({ highlight }) => (highlight ? "green" : "red")};
+  margin-bottom: 10px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-evenly;
+`;
 
 const style = {
   height: "12rem",
@@ -17,12 +29,16 @@ const style = {
   lineHeight: "normal",
   float: "left",
 };
-export const GrabBag = () => {
-  const [dataSource, setDataSource] = useState([]);
+export const GrabBag = ({ items }) => {
+  // const ItemView = ({ item }) => {
+  //   //console.log('itemview:"' + item.imageUrl + '"');
+  //   return <Image source={{ uri: item.imageUrl }} />;
+  // };
 
   const ItemView = ({ item }) => {
     //console.log('itemview:"' + item.imageUrl + '"');
-    return <Image source={{ uri: item.imageUrl }} />;
+
+    return <DragImage imageUrl={item.imageUrl} />;
   };
 
   const [{ canDrop, isOver }, drop] = useDrop({
@@ -44,7 +60,7 @@ export const GrabBag = () => {
     <div ref={drop} style={{ ...style, backgroundColor }}>
       {isActive ? "Release to drop" : "Drag items here"}
       <FlatList
-        data={dataSource}
+        data={items}
         numColumns={6}
         keyExtractor={(item, index) => index.toString()}
         enableEmptySections={true}

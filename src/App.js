@@ -95,17 +95,23 @@ const App = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <DndProvider backend={HTML5Backend}>
-        <View style={styles.container}>
-          <FlatList
-            data={dataSource}
-            numColumns={6}
-            keyExtractor={(item, index) => index.toString()}
-            enableEmptySections={true}
-            renderItem={ItemView}
-            ListFooterComponent={renderFooter}
-          />
+        <View>
+          <GrabBag items={dataSource}></GrabBag>
         </View>
-        <View style={styles.container}>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={getData}
+            //On Click of button load more data
+            style={styles.loadMoreBtn}
+          >
+            <Text style={styles.btnText}>Load More</Text>
+            {loading ? (
+              <ActivityIndicator color="white" style={{ marginLeft: 8 }} />
+            ) : null}
+          </TouchableOpacity>
+        </View>
+        <View>
           <GrabBag></GrabBag>
         </View>
       </DndProvider>
