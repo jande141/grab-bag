@@ -30,7 +30,7 @@ const style = {
   float: "left",
   overflowX: "scroll",
 };
-export const GrabBag = ({ items }) => {
+export const GrabBag2 = ({ top, eff, items }) => {
   // const ItemView = ({ item }) => {
   //   //console.log('itemview:"' + item.imageUrl + '"');
   //   return <Image source={{ uri: item.imageUrl }} />;
@@ -41,7 +41,8 @@ export const GrabBag = ({ items }) => {
 
     return <DragImage imageUrl={item.imageUrl} />;
   };
-
+  console.log("1");
+  useEffect(eff, []);
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: ItemTypes.IMAGE,
     drop: () => ({ name: "GrabBag" }),

@@ -18,6 +18,8 @@ export const DragImage = ({ imageUrl }) => {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
+        window.pandora[window.pandora.length] = item;
+        console.log(global.pandora);
         alert(`Dropped ${item.imageUrl} into ${dropResult.name}`);
       }
     },

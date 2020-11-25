@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { DragImage } from "./DragImage";
 import { GrabBag } from "./GrabBag";
+import { GrabBag2 } from "./GrabBag2";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -16,11 +17,22 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
+import { findAllByDisplayValue } from "@testing-library/react";
+window.pandora = [];
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [dataSource, setDataSource] = useState([]);
+  const [dataSource2, setTime] = useState(window.pandora);
   const [offset, setOffset] = useState(1);
+
+  var pass = () => {
+    const interval = setInterval(() => setTime(window.pandora), 1000);
+    return () => {
+      console.log("2");
+      clearInterval(interval);
+    };
+  };
 
   useEffect(() => getData(), []);
 
@@ -112,7 +124,12 @@ const App = () => {
           </TouchableOpacity>
         </View>
         <View>
-          <GrabBag></GrabBag>
+          <GrabBag2
+            top={false}
+            eff={pass}
+            items={dataSource2}
+            key={dataSource2}
+          ></GrabBag2>
         </View>
       </DndProvider>
     </SafeAreaView>
