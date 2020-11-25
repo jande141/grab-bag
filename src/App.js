@@ -26,14 +26,6 @@ const App = () => {
   const [dataSource2, setTime] = useState(window.pandora);
   const [offset, setOffset] = useState(1);
 
-  var pass = () => {
-    const interval = setInterval(() => setTime(window.pandora), 1000);
-    return () => {
-      console.log("2");
-      clearInterval(interval);
-    };
-  };
-
   useEffect(() => getData(), []);
 
   const getData = () => {
@@ -124,12 +116,7 @@ const App = () => {
           </TouchableOpacity>
         </View>
         <View>
-          <GrabBag2
-            top={false}
-            eff={pass}
-            items={dataSource2}
-            key={dataSource2}
-          ></GrabBag2>
+          <GrabBag2 items={dataSource2}></GrabBag2>
         </View>
       </DndProvider>
     </SafeAreaView>
