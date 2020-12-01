@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext } from "react-beautiful-dnd";
 import { DropContainer } from "./DropContainer";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 const LIMIT = 10;
 const GRAB_BAG = "GrabBag";
@@ -32,10 +34,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const grid = 8;
-
 const getData = (app, offset) => {
-  //console.log("in getData, offset=" + offset + ", LIMIT=" + LIMIT);
   callApi(offset, app.state.grabBagItems)
     .then((response) => {
       app.setState({ items: response });
@@ -46,7 +45,7 @@ const getData = (app, offset) => {
 };
 
 async function callApi(offset, grabBgItems) {
-  //create nap of grabbagitems
+  //create map of grabbagitems
   var grabMap = new Map();
   for (var j = 0; j < grabBgItems.length; j++) {
     grabMap.set(grabBgItems[j].id, grabBgItems[j]);
@@ -68,14 +67,6 @@ async function callApi(offset, grabBgItems) {
     ).then((response) => response.json());
 
     try {
-      //  console.log(
-      //    "in callApi, catInfo.wikiid=" +
-      //      catInfo.wikiid +
-      //      ", catInfo.category=" +
-      //      catInfo.category +
-      //      ", catInfo.image.thumbnail=" +
-      //      catInfo.image.thumbnail
-      //  );
       var item = {};
       item.id = catInfo.wikiid;
       item.category = catInfo.title;
@@ -98,11 +89,13 @@ class App extends Component {
     itemsOffset: -1 * LIMIT,
   };
 
+  componentDidMount() {
+    this.getNext(this);
+  }
+
   constructor(props) {
     super(props);
-    //localStorage.clear();
     var prevState = localStorage.getItem(GRAB_BAG);
-    //console.log("constructor, prevState=" + prevState);
     if (!prevState || prevState.length === 0) return;
     this.state.grabBagItems = JSON.parse(prevState);
   }
@@ -168,6 +161,14 @@ class App extends Component {
     }
   };
 
+  classes = makeStyles((theme) => ({
+    root: {
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
+  }));
+
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -175,9 +176,22 @@ class App extends Component {
           items={this.state.items}
           dropID={"droppable"}
         ></DropContainer>
-        <button onClick={() => this.getPrev(this)}>Get Previous</button>
 
-        <button onClick={() => this.getNext(this)}>Get Next</button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this.getPrev(this)}
+        >
+          Get Previous
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this.getNext(this)}
+        >
+          Get Next
+        </Button>
 
         <DropContainer
           items={this.state.grabBagItems}
