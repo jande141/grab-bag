@@ -22,7 +22,7 @@ export const DropContainer = ({ items, dropID }) => {
     background: isDraggingOver ? "lightblue" : "lightgrey",
     padding: grid,
     width: "80%",
-    columnCount: 5,
+    columnCount: 7,
   });
 
   const classes = useStyles();

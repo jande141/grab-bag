@@ -4,6 +4,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { DropContainer } from "./DropContainer";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 
 const LIMIT = 10;
 const GRAB_BAG = "GrabBag";
@@ -161,11 +162,9 @@ class App extends Component {
     }
   };
 
-  classes = makeStyles((theme) => ({
+  classes = makeStyles(() => ({
     root: {
-      "& > *": {
-        margin: theme.spacing(1),
-      },
+      width: "70vw",
     },
   }));
 
@@ -177,21 +176,24 @@ class App extends Component {
           dropID={"droppable"}
         ></DropContainer>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => this.getPrev(this)}
-        >
-          Get Previous
-        </Button>
+        <Box m={4} className={this.classes.root}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.getPrev(this)}
+          >
+            Get Previous
+          </Button>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => this.getNext(this)}
-        >
-          Get Next
-        </Button>
+          <div>&nbsp;&nbsp;</div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.getNext(this)}
+          >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get Next&nbsp;&nbsp;&nbsp;&nbsp;
+          </Button>
+        </Box>
 
         <DropContainer
           items={this.state.grabBagItems}
